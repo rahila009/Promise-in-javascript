@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <!-- In JavaScript, a Promise is an object representing the eventual completion or failure of an asynchronous 
+operation and its resulting value. It is a way to handle asynchronous operations more easily and cleanly.
+
+A Promise can be in one of three states:
+
+Pending: The initial state; the promise is neither fulfilled nor rejected.
+Fulfilled: The operation completed successfully, and the promise has a resulting value.
+Rejected: The operation failed, and the promise has a reason for the failure.
+
+// agar koi response aya toh then() mai ajayeh ga or koi error howa toh catch()
+//finally run hota hi hota hai
+//promise apnay ap mai ek oject hai
+// javascript k nadar by default promise method milta hai
+//promise k andar function hota hai or is function k andar two cheezay hotay ek resolve ek reject
+// promise two bases pay hota hai ya toh promise resovle hoga ya promise reject hoga -->
+
+
+
+<div>
+    <h1 style="text-align: center; margin-top: 20px;">PROMISES</h1>
+</div>
+</body>
+<script>
+
+
+    //do an async task
+    //database call ,crptography related task, network call hosktay hai
+    // resovle() yeh .than()sy connect kawanay k lyeh
+
+    // const promisOne = new Promise(function (resovle, reject) {
+
+    //     setTimeout(function () {
+    //         // yeh .than()sy connect kawanay k lyeh     // console.log('async task is complte')
+    //         console.log('async task complte')
+
+    //         resovle()
+    //     }, 2000)
+    // })
+
+    // promisOne.than(function () {
+    //     console.log('promise consumed')
+    // })
+
+    // resolve ka conection hai .than k sat
+
+
+
+
+    const promiseOne = new Promise(function (resolve, reject) {
+        setTimeout(function () {
+            console.log('Async task complete');
+            resolve();
+        }, 2000);
+    });
+
+    promiseOne.then(function () {
+        console.log('Promise consumed');
+    });
+
+    new Promise(function (resolve, reject) {
+        setTimeout(function () {
+            console.log('Async task two');
+            resolve(); // Resolve the promise after the asynchronous task is complete
+        }, 1000);
+    }).then(function () {
+        console.log("Async two resolved");
+    });
+
+    const promiseThree = new Promise(function (resolve, reject) {
+        setTimeout(function () {
+            resolve({ username: "rahila", email: "rahilarahim@gmail.com" });
+        }, 2000);
+    });
+
+    promiseThree.then(function (user) {
+        console.log(user);
+    });
+
+    const promiseFour = new Promise(function (resolve, reject) {
+        setTimeout(function () {
+            let error = true
+            if (!error) {// if error nahi hai
+                resolve({ username: "rahila", password: "123" })
+            } else {
+                reject('Error: something went wronge')// reject juh hai apko error deta hai
+
+            }
+        }, 1000)
+    });
+
+    promiseFour.then((user) => {
+        console.log(user)
+        return user.username
+
+    }).then((username) => { // this the varibale name
+        console.log(username)
+    }).catch(function (error) {// this is for the error 
+        console.log(error)
+
+        //finally is leyh use karaty hai kyun humara error juh hai woh resolve tha ya error ana tha ya kaam hona tha woh 
+        //hogoaya kya is lyeh use hota hai
+        // yeh toh hoga hi hoga
+    }).finally(() => console.log("the promise is either resolved or rejected"))
+
+
+
+    // yani juh upper wali .than sy humera pass juh value return ho k ayi gee woh hi  humari retur mai ayi gee
+
+    const promiseFive = new Promise(function (resovle, reject) {
+        setTimeout(function () {
+            let error = true
+            if (!error) {// if error nahi hai
+                resolve({ username: "Javascript", password: "123" })
+            } else {
+                reject('Error: js went wronge')// reject juh hai apko error deta hai
+
+            }
+        }, 1000)
+    })
+
+
+    //  async function consumepromiseFive(){
+    //     const response = await  promiseFive
+    //     console.log(response)
+    //  }
+
+
+
+    async function consumepromiseFive() {
+        try {
+            const response = await promiseFive
+            console.log(response);
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+
+    consumepromiseFive()
+
+
+
+
+    //zaruri nai ki hum promises .than or .catch sy handle karay
+    //yhn pay humaray pass async await hota yeh asa karta hai ki kam k
+    //honay tak thodi dher wait krta hai
+    // agar kaam hota hai toh agay bata hai warna wahi pay hi error deta hai..
+    //jab humaray pass promise design hai or whn humra pass error true hai  yani error asakti hai
+    //ya suppose network request kar thay or wha nvalue asaktii hai toh whn problem hosakti hai
+    //  async await ka masla hai ki woh directly error resovle nai karsaty
+    //toh is leyh hum try catch mai apna promise handle karsaty hai
+
+
+    // async function getAllUsers() {
+    // try {
+    //     const response=    await   fetch('https://jsonplaceholder.typicode.com/users')
+    //   const data =  await response.json() // yhn hum response mai juh data hoga woh json mai convert
+    //   //kar rahy hai kyun ki whn sy juh ata araha tha woh sara string mai arah atha
+    //   //yhn await response k sath is lyeh laga ki data ko json mai concovert honay mai time lgata hai
+    //   console.log(data)
+    // } catch (error) {
+    //     console.log("E" ,error)
+    // }
+    // }
+
+
+    // // getAllUsers()
+    // than agar isi ko hi humay .than mai krna ho toh kasy karay gay
+
+
+    fetch('https://jsonplaceholder.typicode.com/users')
+    .then((response)=>{
+     return response.json()
+    })
+    //  hum hum nay response to return kya hai json mai lakin is ko handle kn karay 
+    // is k lyeh hum ek or than lagayeh gay
+   .then((data)=>{
+      console.log(data)
+   })
+    
+    .catch((error)=>console.log(error))
+
+
+
+
+</script>
+
+</html>
